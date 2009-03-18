@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
+<title>HTML Slidy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content= "" />
+<meta name="font-size-adjustment" content="-2" />
+<link rel="stylesheet" href="slidy.css" type="text/css"
+media="screen, projection, print" />
+<link rel="stylesheet" href="w3c-blue.css" type="text/css"
+media="screen, projection, print" />
+<script src="slidy.js" type="text/javascript">
+</script>
+</head>
+<body>
+	
+<div class="background slanty">
+<img src="w3c-logo-slanted.jpg" alt="slanted W3C logo" />
+</div>
+<div class="slide cover title">
+  <!-- hidden style graphics to ensure they are saved with other content -->
+  <img class="hidden" src="../Slidy/bullet.png" alt="" />
+  <img class="hidden" src="../Slidy/fold.gif" alt="" />
+  <img class="hidden" src="../Slidy/unfold.gif" alt="" />
+  <img class="hidden" src="../Slidy/fold-dim.gif" alt="" />
+  <img class="hidden" src="../Slidy/nofold-dim.gif" alt="" />
+  <img class="hidden" src="../Slidy/unfold-dim.gif" alt="" />
+  <img class="hidden" src="../Slidy/bullet-fold.gif" alt="" />
+  <img class="hidden" src="../Slidy/bullet-unfold.gif" alt="" />
+  <img class="hidden" src="../Slidy/bullet-fold-dim.gif" alt="" />
+  <img class="hidden" src="../Slidy/bullet-nofold-dim.gif" alt="" />
+  <img class="hidden" src="../Slidy/bullet-unfold-dim.gif" alt="" />
+
+<br clear="all" />
+<h1>Making an AJAX GUI for GNU Screen.</h1>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h2>YAPC::NA 2007</h2>
+<h3>Houston, TX</h3>
+<h4>Pittsburgh Perl Mongers</h4>
+<h5>Robert Blackwell</h5>
+<br />
+<br />
+</div>
+
+
+<div class="slide">
+<h1>What is GNU Screen?</h1>
+DESCRIPTION
+<p>
+Screen is a full-screen window manager that multiplexes a physical terminal between several processes (typically interactive shells). Each virtual terminal provides the functions of a DEC VT100 terminal and, in addition, several control functions from the ISO 6429 (ECMA 48, ANSI X3.64) and ISO 2022 standards (e.g. insert/delete line and support for multiple character sets). There is a scrollback history buffer for each virtual terminal and a copy-and-paste mechanism that allows moving text regions between windows.
+
+When screen is called, it creates a single window with a shell in it (or the specified command) and then gets out of your way so that you can use the program as you normally would. Then, at any time, you can create new (full-screen) windows with other programs in them (including more shells), kill existing windows, view a list of windows, turn output logging on and off, copy-and-paste text between windows, view the scrollback history, switch between windows in whatever manner you wish, etc. All windows run their programs completely independent of each other. Programs continue to run when their window is currently not visible and even when the whole screen session is detached from the user's terminal. When a program terminates, screen (per default) kills the window that contained it. If this window was in the foreground, the display switches to the previous window; if none are left, screen exits.
+
+Everything you type is sent to the program running in the current window. The only exception to this is the one keystroke that is used to initiate a command to the window manager. By default, each command begins with a control-a (abbreviated C-a from now on), and is followed by one other keystroke. The command character and all the key bindings can be fully customized to be anything you like, though they are always two characters in length.
+
+Screen does not understand the prefix "C-" to mean control. Please use the caret notation ("^A" instead of "C-a") as arguments to e.g. the escape command or the -e option. Screen will also print out control characters in caret notation. 
+
+...
+
+</p>
+</div>
+
+<div class="slide">
+<h1></h1>
+<h2>Blah!</h2>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<p>Blah indeed</p>
+</div>
+
+
+<div class="slide">
+<h1>GNU Screen screenshots</h1>
+<p>windowlist</p>
+<br />
+<img  src="images/windowlist.png" alt="" />
+<br />
+</div>
+
+
+<div class="slide">
+<h1>GNU Screen screenshots</h1>
+<p>Split Screen</p>
+<br />
+Two regions
+<img  src="images/splitscreen.png" alt="" />
+</div>
+
+<div class="slide">
+<h1></h1>
+<h2>Blah!</h2>
+<p>
+Screen is about:
+	<ol>
+		<li>Saving state
+		<li>Productivity 
+		<li>Getting Things Done
+		<li>A box to put project parts into. (RT, log files, etc)
+	</ol>
+
+
+<br />
+<br />
+
+	<div style=text-align:center >
+	Ever install Plagger?
+	</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+</div>
+
+<div class="slide">
+<h1></h1>
+<p>But too much state can be confusing.</p>
+</div>
+
+<div class="slide">
+<h1></h1>
+<ul><li>Learning to love the things you hate.  <li>Or at least learning to deal with them. <li>And it is really not that bad.</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Outline </h1>
+	<ol>
+		<li>Serve 'Hi' (HTTP::Server::Simple)
+		<li>screen -X (not -x)
+		<li>'select' a screen
+		<li>Graphiz
+		<li>'stuff' a screen
+		<li>Live Documentation
+		<li>Search 
+		<!-- <li>Better WindowList -->
+		<!-- <li>Tracking auto update thing -->
+		<li>ssh Applet
+		<li>Screen.pm
+	</lo>
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+
+<PRE>
+     1  <I><FONT COLOR="#B22222">#!/usr/bin/perl </FONT></I>     
+     2  <B><FONT COLOR="#A020F0">use</FONT></B> HTTP::Server::Simple;
+     3  <B><FONT COLOR="#A020F0">my</FONT></B> </FONT></B>$server = HTTP::Server::Simple-&gt;new();
+     4  <B><FONT COLOR="#A020F0">use</FONT></B> base <B><FONT COLOR="#A020F0">qw</FONT></B>( HTTP::Server::Simple::CGI );
+     5
+     6  main-&gt;new(8091)-&gt;run;
+     7
+     8  <B><FONT COLOR="#A020F0">exit</FONT></B>;
+     9
+    10  <B><FONT COLOR="#A020F0">sub</FONT></B> handle_request {
+    11      <B><FONT COLOR="#A020F0">my</FONT></B> (</FONT></B>$self, </FONT></B>$cgi) = </FONT></B>@_;
+    12          <B><FONT COLOR="#A020F0">print</FONT></B> </FONT></B>$cgi-&gt;start_html();
+    13          <B><FONT COLOR="#A020F0">print</FONT></B> </FONT></B>$cgi-&gt;h1(<FONT COLOR="#BC8F8F"><B>&quot;&lt;center&gt;hi&lt;/center&gt;&quot;</FONT></
+B>);
+    14          <B><FONT COLOR="#A020F0">print</FONT></B> </FONT></B>$cgi-&gt;end_html();
+    15  }
+</PRE>
+
+
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+<img  src="images/hi.png" alt="" />
+</div>
+
+<div class="slide">
+<h1></h1>
+
+<p>Serve 'Hi' name  (Http:Server::Simple)</p>
+
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> HTTP::Server::Simple;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4
+     5  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new();
+     6
+     7  main-&gt;new(8090)-&gt;run;
+     8
+     9  <B>exit</B>;
+    10
+    11  <B>sub</B> handle_request {
+    12      <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    13          <B>print</B> </B>$cgi-&gt;start_html();
+    14          <B>print</B> </B>$cgi-&gt;h1(<B>&quot;&lt;center&gt;hi &quot;</B>, </B>$cgi-&gt;param(<B>'name'</B>) , <B>&quot;&lt;/center&gt;&quot;</B>);
+    15          <B>print</B> </B>$cgi-&gt;end_html();
+    16  }
+</PRE>
+<code>
+</code>
+</div>
+    
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+<img  src="images/hibob.png" alt="" />
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2      <B>use</B> HTTP::Server::Simple;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4
+     5  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new();
+     6
+     7  main-&gt;new(8090)-&gt;run;
+     8
+     9  <B>exit</B>;
+    10
+    11  <B>sub</B> handle_request {
+    12      <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    13          <B>my</B> </B>$greeting = </B>$cgi-&gt;path_info();
+    14          </B>$greeting =~ <B>s</B>!/!!g;
+    15
+    16          <B>print</B> </B>$cgi-&gt;start_html();
+    17          <B>print</B> </B>$cgi-&gt;h1(<B>&quot;&lt;center&gt;$greeting &quot;</B>, </B>$cgi-&gt;param(<B>'name'</B>) , <B>&quot;&lt;/center&gt;&quot;</B>);
+    18          <B>print</B> </B>$cgi-&gt;end_html();
+    19  }
+</PRE>
+
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+<img  src="images/hellobob.png" alt="" />
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+<img  src="images/greetingsbob.png" alt="" />
+</div>
+
+<div class="slide">
+<h1>Serve 'Hi' (Http:Server::Simple)</h1>
+
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> HTTP::Server::Simple;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4
+     5  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new();
+     6
+     7  main-&gt;new(8090)-&gt;run;
+     8
+     9  <B>exit</B>;
+    10
+    11  <B>sub</B> handle_request {
+    12      <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    13          <B>my</B> </B>$greeting = </B>$cgi-&gt;path_info();
+    14          </B>$greeting =~ <B>s</B>!/!!g;
+    15
+    16          <B>print</B> </B>$cgi-&gt;start_html();
+    17          <B>print</B> </B>$cgi-&gt;h1(<B>&quot;&lt;center&gt;$greeting &quot;</B>, </B>$cgi-&gt;param(<B>'name'</B>) , <B>&quot;&lt;/center&gt;&quot;</B>);
+    18          <B>print</B> </B>$cgi-&gt;end_html();
+    19  }
+</PRE>
+
+<code>
+
+	<ul>
+		<li>$cgi->param('name')
+		<li>$cgi->path_info()
+	</ul>
+
+ <code>
+</div>
+
+<div class="slide">
+	<h1>Security</h1>
+HTTP::Server::Simple::Authen - Authentication plugin for HTTP::Server::Simple
+
+</div>
+
+<div class="slide">
+	<h1> Screen -X (not -x) </h1>
+<pre>
+-x
+    Attach to a not detached screen session. (Multi display mode). 
+-X
+    Send the specified command to a running screen session. You can use the -d or -r option to tell screen to look only for attached or detached screen sessions. Note that this command doesn't work if the session is password protected.
+		
+</pre>
+</div>
+
+
+<div class="slide">
+	<h1> Screen -X (not -x) </h1>
+<pre>
+screen -X screen -t test 
+screen -X eval 'stuff "./Build test test_files=xyx.t\015"'
+screen -X eval 'at test stuff "./Build test test_files=xyx.t\015"'
+screen -X select test
+screen -X select build
+
+
+$ screen -ls
+There are screens on:
+        4416.talk       (Attached)
+        4743.test2      (Attached)
+
+screen -s talk  -X select test
+screen -s test2 -X select test
+
+screen -x test2
+
+screen -S test2 -X displays
+term-type   size         user interface           window
+---------- ------- ---------- ----------------- ----------
+xterm       80x24    rblackwe@/dev/ttypd          1(edit)       rwx
+xterm      109x13    rblackwe@/dev/ttyp9          0(bash)       rwx
+
+
+</pre>
+</div>
+
+
+<div class="slide">
+<h1>Graphviz</h1>
+
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> GraphViz;
+     3  <B>use</B> CGI;
+     4
+     5  <B>my</B> </B>$g = GraphViz-&gt;new();
+     6
+     7  </B>$g-&gt;add_node(<B>'Edit'</B>);
+     8  </B>$g-&gt;add_node(<B>'Test'</B>);
+     9  </B>$g-&gt;add_node(<B>'Commit'</B>);
+    10
+    11  </B>$g-&gt;add_edge(<B>'Edit'</B> =&gt; <B>'Test'</B>);
+    12  </B>$g-&gt;add_edge(<B>'Test'</B> =&gt; <B>'Look at test results'</B>, label =&gt; <B>'fail'</B>);
+    13  </B>$g-&gt;add_edge(<B>'Look at test results'</B> =&gt; <B>'Edit'</B>, label =&gt; <B>'fail'</B>);
+    14  </B>$g-&gt;add_edge(<B>'Test'</B> =&gt; <B>'Commit'</B>, label =&gt; <B>'pass'</B>);
+    15
+    16  <B>open</B> <B>my</B> </B>$x, <B>&quot;&gt;&quot;</B>, <B>&quot;images/map.gif&quot;</B>;
+    17  <B>binmode</B> </B>$x;
+    18  <B>print</B> </B>$x </B>$g-&gt;as_gif;
+    19  <B>close</B> </B>$x;
+    20
+    21  <B>my</B> </B>$cgi = CGI-&gt;new();
+    22
+    23  <B>print</B>  </B>$cgi-&gt;header();
+    24  <B>print</B>  </B>$cgi-&gt;start_html();
+    25  <B>print</B>  <B>'&lt;IMG SRC=&quot;images/map.gif&quot; USEMAP=&quot;#test&quot; /&gt;'</B>;
+    26  <B>print</B>  </B>$g-&gt;as_cmapx;
+    27  <B>print</B>  </B>$cgi-&gt;end_html();
+    28
+</PRE>
+
+</div>
+
+<div class="slide">
+<h1>Graphviz</h1>
+<img  src="images/map.gif" alt="" />
+</div>
+
+<div class="slide">
+<h1>Graphviz</h1>
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> GraphViz;
+     3  <B>use</B> CGI;
+     4
+     5  <B>my</B> </B>$g = GraphViz-&gt;new();
+     6
+     7  </B>$g-&gt;add_node(<B>'Edit'</B>,                 URL =&gt; <B>'http://localhost:8090/select?name=edit'</B>, color =&gt; <B>'green'</B>  );
+     8  </B>$g-&gt;add_node(<B>'Test'</B>,                 URL =&gt; <B>'http://localhost:8090/select?name=test'</B>);
+     9  </B>$g-&gt;add_node(<B>'Commit'</B>,               URL =&gt; <B>'http://localhost:8090/select?name=commit'</B>);
+    10  </B>$g-&gt;add_node(<B>'Look at test results'</B>, URL =&gt; <B>'http://localhost:8090/select?name=test'</B>, );
+    11
+    12  </B>$g-&gt;add_edge(<B>'Edit'</B> =&gt; <B>'Test'</B>);
+    13  </B>$g-&gt;add_edge(<B>'Test'</B> =&gt; <B>'Look at test results'</B>, label =&gt; <B>'fail'</B>);
+    14  </B>$g-&gt;add_edge(<B>'Look at test results'</B> =&gt; <B>'Edit'</B>,);
+    15  </B>$g-&gt;add_edge(<B>'Test'</B> =&gt; <B>'Commit'</B>, label =&gt; <B>'pass'</B>);
+    16
+    17  <B>open</B> <B>my</B> </B>$x, <B>&quot;&gt;&quot;</B>, <B>&quot;images/map.gif&quot;</B>;
+    18  <B>binmode</B> </B>$x;
+    19  <B>print</B> </B>$x </B>$g-&gt;as_gif;
+    20  <B>close</B> </B>$x;
+    21
+    22  <B>open</B> <B>my</B> </B>$x, <B>&quot;&gt;&quot;</B>, <B>&quot;map.html&quot;</B>;
+    23
+    24  <B>my</B> </B>$cgi = CGI-&gt;new();
+    25
+    26  <B>print</B>  </B>$cgi-&gt;header();
+    27  <B>print</B>  </B>$cgi-&gt;start_html();
+    28  <B>print</B>  <B>'&lt;IMG SRC=&quot;images/map.gif&quot; USEMAP=&quot;#test&quot; /&gt;'</B>;
+    29  <B>print</B>   </B>$g-&gt;as_cmapx;
+    30  <B>print</B>  </B>$cgi-&gt;end_html();
+    31
+</PRE>
+</div>
+
+
+<div class="slide">
+<h1>Graphviz</h1>
+<img  src="images/linked_graph.png" alt="" />
+</div>
+
+<div class="slide">
+<h1>Graphviz</h1>
+
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> HTTP::Server::Simple;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4
+     5  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new();
+     6
+     7  main-&gt;new(8090)-&gt;run;
+     8
+     9  <B>exit</B>;
+    10
+    11  <B>sub</B> handle_request {
+    12      <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    13          <B>my</B> </B>$action = </B>$cgi-&gt;path_info();
+    14          </B>$action =~ <B>s</B>!/!!g;
+    15
+    16          <B>return</B> do_error(</B>$cgi) <B>unless</B> </B>$action <B>eq</B> <B>'select'</B>;
+    17
+    18          <B>print</B> </B>$cgi-&gt;start_html();
+    19          <B>my</B> </B>$command = <B>sprintf</B>  <B>&quot;screen -X select %s&quot;</B>, </B>$cgi-&gt;param(<B>'name'</B>);
+    20          system(</B>$command);
+    21          <B>print</B> </B>$cgi-&gt;h3(<B>&quot;&lt;center&gt;$command&lt;/center&gt;&quot;</B>);
+    22          <B>print</B> </B>$cgi-&gt;end_html();
+    23  }
+    24  <B>sub</B> do_error {
+    25          <B>my</B>  </B>$cgi = <B>shift</B>;
+    26          <B>print</B> </B>$cgi-&gt;start_html();
+    27          <B>print</B> </B>$cgi-&gt;h1(<B>&quot;&lt;center&gt;error &lt;/center&gt;&quot;</B>);
+    28          <B>print</B> </B>$cgi-&gt;end_html();
+    29  }
+</PRE>
+
+</div>
+
+<div class="slide">
+	<h1>'stuff' a screen </h1>
+<center>
+<code>
+http://rblackwe.com:8090/stuff?data=hi
+</code>
+</center>
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> HTTP::Server::Simple;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4
+     5  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new();
+     6
+     7  main-&gt;new(8090)-&gt;run;
+     8
+     9  <B>exit</B>;
+    10
+    11  <B>sub</B> handle_request {
+    12      <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    13          <B>my</B> </B>$action = </B>$cgi-&gt;path_info();
+    14          </B>$action =~ <B>s</B>!/!!g;
+    15
+    16          <B>return</B> do_error(</B>$cgi) <B>unless</B> </B>$action <B>eq</B> <B>'stuff'</B>;
+    17
+    18          <B>print</B> </B>$cgi-&gt;start_html();
+    19          <B>my</B> </B>$command = <B>sprintf</B>  <B>'screen -X eval \'stuff &quot;%s \015&quot;\''</B>, </B>$cgi-&gt;param(<B>'data'</B>);
+    20          system(</B>$command);
+    21          <B>print</B> </B>$cgi-&gt;h3(<B>&quot;&lt;center&gt;$command&lt;/center&gt;&quot;</B>);
+    22          <B>print</B> </B>$cgi-&gt;end_html();
+    23  }
+    24  <B>sub</B> do_error {
+    25          <B>my</B>  </B>$cgi = <B>shift</B>;
+    26          <B>print</B> </B>$cgi-&gt;start_html();
+    27          <B>print</B> </B>$cgi-&gt;h1(<B>&quot;&lt;center&gt;error &lt;/center&gt;&quot;</B>);
+    28          <B>print</B> </B>$cgi-&gt;end_html();
+    29  }
+</PRE>
+
+</div>
+
+<div class="slide">
+	<h1>Live Documentation</h1>
+<br />
+<img  src="images/live_doc.png" alt="" />
+<br />
+</div>
+
+<div class="slide">
+	<h1> Search </h1>
+	<pre>
+	<code>	
+       hardcopy [-h] [file]
+
+       Writes out the currently displayed image to the file file,  or,  if  no
+       filename  is specified, to hardcopy.n in the default directory, where n
+       is the number of the current window.  This either appends or overwrites
+       the  file if it exists. See below.  If the option -h is specified, dump
+       also the contents of the scrollback buffer.
+
+       hardcopydir directory
+
+       Defines a directory where hardcopy files  will  be  placed.  If  unset,
+       hardcopys are dumped in screen's current working directory.
+
+       </code>
+</pre>
+	
+</div>
+
+<div class="slide">
+	<h1> Search </h1>
+	<p>hardcopy_grep</p>
+<PRE>
+     1  <I>#!/bin/bash </I>     
+     2   screen -X <B>chdir</B> /Users/rblackwe/Sites/tests/hardcopy_grep_talk/files
+     3  myvar=0
+     4  <B>while</B> [ </B>$myvar -<B>ne</B> 5 ]
+     5  <B>do</B>
+     6      screen -X at </B>$myvar hardcopy
+     7      myvar=$(( </B>$myvar + 1 ))
+     8  done
+     9
+    10  <B>grep</B> -i -n </B>$1 /Users/rblackwe/Sites/tests/hardcopy_grep_talk/files/hardcopy.*
+    11
+</PRE>
+	
+</div>
+
+
+<div class="slide">
+	<h1> Search </h1>
+<PRE>
+     1  <I>#!/usr/bin/perl </I>     
+     2  <B>use</B> CGI::AJAX;
+     3  <B>use</B> base <B>qw</B>( HTTP::Server::Simple::CGI );
+     4  <B>use</B> Text::MicroMason;
+     5
+     6  <B>my</B> </B>$server = HTTP::Server::Simple-&gt;new(8090);
+     7
+     8  <B>my</B> </B>$pjx = CGI::Ajax-&gt;new( <B>'myfunc'</B> =&gt; <B>'/search'</B>);
+     9
+    10  <B>my</B> </B>$Show_Form = show_form();
+    11
+    12  <B>sub</B> handle_request {
+    13          <B>my</B> (</B>$self, </B>$cgi) = </B>@_;
+    14
+    15          <B>if</B> ( </B>$cgi-&gt;path_info() <B>eq</B> <B>'/search'</B> ) {
+    16                  <B>my</B> </B>$search_for = </B>$cgi-&gt;param(<B>'term'</B>);
+    17                  <B>my</B> </B>$lines = do_search( </B>$search_for, </B>$cgi );
+    18                  <B>my</B> $ temp_result = mason_template ( <B>&quot;results&quot;</B>, </B>$cgi, </B>$lines );
+    19                  <B>print</B> </B>$temp_result;
+    20                  <B>return</B> </B>$temp_result;
+    21          }
+    22
+    23          <B>my</B> </B>$page = </B>$pjx-&gt;build_html(</B>$cgi, </B>$Show_Form);
+    24          </B>$page =~ <B>s</B>!^Content-Type: text/html; charset=ISO-8859-1!!g;
+    25          <B>print</B>  </B>$page;
+    26  }
+    27
+    28  main-&gt;new(8090)-&gt;run;
+    29
+    30  <B>exit</B>;
+    31
+    32  <B>sub</B> show_form  {
+    33  <B>my</B> </B>$html = &lt;&lt;EOT;
+    34  &lt;HTML&gt;
+    35  &lt;HEAD&gt;&lt;title&gt;screen search&lt;/title&gt;
+    36  &lt;/HEAD&gt;
+    37  &lt;BODY&gt;
+    38  &lt;form&gt;
+    39  Screen Search:</B>&amp;nbsp;
+    40    &lt;input type=<B>&quot;text&quot;</B> name=<B>&quot;val1&quot;</B> id=<B>&quot;val1&quot;</B> size=<B>&quot;15&quot;</B>
+    41      onkeyup=<B>&quot;myfunc( ['term__' + getVal('val1')], ['val2'] );
+    42      return true;&quot;</B>&gt;
+    43    &lt;br/&gt;
+    44  &lt;/form&gt;
+    45  &lt;div id=val2 /&gt;
+    46  &lt;/BODY&gt;
+    47  &lt;/HTML&gt;
+    48  EOT
+    49    <B>return</B> </B>$html;
+    50  };
+    51
+    52
+    53  <B>sub</B> do_search {
+    54          <B>my</B> </B>$search = <B>shift</B>;
+    55          <B>my</B> </B>$cgi    = <B>shift</B>;
+    56          <B>my</B> </B>$hc =<B>`/Users/rblackwe/Sites/tests/hardcopy_grep_talk/hardcopy_grep $search`</B>;
+    57          <B>my</B> </B>@hc = <B>split</B> /\n/, </B>$hc;
+    58          <B>my</B> </B>@lines;
+    59          <B>foreach</B>  (</B>@hc) {
+    60                  <B>s</B>!^/Users/rblackwe/Sites/tests/hardcopy_grep_talk/files/hardcopy\.!!g;
+    61                  <B>my</B> (</B>$screen_number, </B>$line_number, </B>$line) = <B>split</B>(/:/, </B>$_, 3);
+    62                  <B>my</B> </B>%data;
+    63                  </B>$data{screen_number} = </B>$screen_number;
+    64                  </B>$data{line_number}   = </B>$line_number;
+    65                  </B>$data{line}          = </B>$cgi-&gt;escapeHTML(</B>$line);
+    66                  <B>push</B> </B>@lines, \</B>%data;
+    67          }
+    68          <B>return</B> \</B>@lines;
+    69  }
+    70
+    71
+    72  <B>sub</B> mason_template {
+    73          <B>my</B> </B>$template_name = <B>shift</B>;
+    74          <B>my</B> </B>$cgi           = <B>shift</B>;
+    75          <B>my</B> </B>$lines         = <B>shift</B>;
+    76          <B>my</B> </B>$mason = Text::MicroMason-&gt;new( -Filters,
+    77                                             -TemplateDir,
+    78                                             template_root =&gt; <B>&quot;templates/&quot;</B> ,) <B>or</B> <B>return</B>;
+    79
+    80          <B>return</B> </B>$mason-&gt;execute(file =&gt; </B>$template_name, lineinfo =&gt; </B>$lines);
+    81  }
+    82
+    83
+    84  <B>sub</B> Show_HTML {
+    85      <B>my</B> </B>$html = &lt;&lt;EOHTML;
+    86        Enter something:
+    87          &lt;input type=<B>&quot;text&quot;</B> name=<B>&quot;val1&quot;</B> id=<B>&quot;val1&quot;</B>
+    88           onkeyup=<B>&quot;exported_func( ['val1'], ['resultdiv'] );&quot;</B>&gt;
+    89        &lt;br&gt;
+    90        &lt;div id=<B>&quot;resultdiv&quot;</B>&gt;&lt;/div&gt;
+    91  EOHTML
+    92   <B>return</B> </B>$html;
+    93  }
+</pre>
+</div>
+
+<div class="slide">
+<h1>Search</h1>
+<a href="http://rblackwe.com:8090/">Demo</a>
+
+<br />
+</div>
+	
+<div class="slide">
+<h1>Search</h1>
+http://rblackwe.com:8090/search?term=b
+<br />
+<img  src="images/search.png" alt="" />
+<br />
+</div>
+
+<div class="slide">
+<h1>ssh Applet</h1>
+<a href="http://rblackwe.com/~rblackwe/tests/ssh_talk/client.html">ssh Demo</a>
+<br />
+</div>
+
+
+<div class="slide">
+<h1>?Terminal::Screen.pm?</h1>
+This is the beast that will help tame the complexity.
+Building a test suite now.  With the perl module code but it will fail until I can get some patches or changes into GNU Screen.
+
+<br />
+
+</div>
+
+
+<div class="slide">
+<h1>But</h1>
+
+<br />
+<p>But ...</p>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Ratpoisn.pm</h1>
+<a href="http://www.nongnu.org/ratpoison/">Ratpoison</a>
+<br />
+<p>
+What is Ratpoison?
+<br />
+Ratpoison is a simple Window Manager with no fat library dependencies, no fancy graphics, no window decorations, and no rodent dependence. It is largely modelled after **** GNU Screen **** which has done wonders in the virtual terminal market.
+
+The screen can be split into non-overlapping frames. All windows are kept maximized inside their frames to take full advantage of your precious screen real estate.
+
+All interaction with the window manager is done through keystrokes. ratpoison has a prefix map to minimize the key clobbering that cripples Emacs and other quality pieces of software.
+
+If you're wondering how we came up with the name ratpoison, here is the usenet post that started it all. 
+</p>
+
+</div>
+
+<div class="slide">
+	<h1>Other possible examples</h1>
+<a href="http://robertblackwell.com/robert/screen_sort/tool-man/examples/sorting.html" > sort</a>
+<br />
+<a href="http://robertblackwell.com/robert/screen_sort/tool-man/examples/edit-in-place.html">In place with sort</a>
+</div>
+
+<div class="slide">
+<h1>Links and stuff </h1>
+<a href="http://search.cpan.org/~aufflick/HTTP-Server-Brick-0.0.8/">HTTP::Server::Brick</a>
+<br />
+robert@robertblackwell.com
+
+</body>
+</html>
