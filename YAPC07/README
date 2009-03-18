@@ -1,0 +1,47 @@
+Making an AJAX GUI for GNU Screen.
+
+By Robert Blackwell (rblackwe) from Pittsburgh.pm 
+Date: Monday, June 25, 2007 01:55 PM
+Duration: 50 minutes
+GNU Screen is a great tool, but a little AJAX and Perl
+can release even more power. In this talk I will show
+you how to build a GUI to incorporate all of your
+screens into one seamless application, insulating you
+from different screen sessions and screens on
+different machines.
+
+Trying to manipulate, monitor, and query multiple
+screen environments on multiple machines can prove
+difficult. A GUI can help let you see into your
+configuration and help you navigate quickly and
+effectively. If you have ever lost yourself in
+screen, this talk will interest you. But this talk is
+about more than just finding yourself. It’s about
+keeping your state and being able to navigate quickly
+to different screen locations.
+
+Some things I’ll cover are
+- how to monitor screens for activity, silence, and
+pattern matches across your entire server farm
+- how to make an auto complete search box based on the
+content of your all screen
+windows
+- how to create and use a global screen clipboard
+
+
+
+Description Short:
+Learn how to make an AJAX GUI for GNU Screen to make
+it easier to monitor and manipulate multiple screens,
+either on the same machine or across multiple
+computers.
+
+
+Speaker bio: Robert Blackwell has been programming in Perl since
+1993, when a college professor said they would cover
+bash, sed, and awk—but not that weird beast Perl. His
+interest in Perl was piqued and he’s worked it into
+every job since. Currently a Perl programmer in
+Pittsburgh, PA, he helped organize the first
+Pittsburgh Perl Workshop in 2006 and is in the throes
+of making it bigger and better for 2007.
